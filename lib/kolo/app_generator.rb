@@ -2,6 +2,7 @@
 
 module Kolo
   class AppGenerator
+    APP_EXISTS_ERROR_MESSAGE = "error when generating application: application already exists at '%s'"
     FILE_PARSE_ERROR_MESSAGE = "error when attempting to parse configuration file: file is missing or invalid"
     INVALID_CONFIGURATION_ERROR_MESSAGE = "configuration file is invalid: configuration for '%s' is missing or invalid"
 
@@ -12,13 +13,17 @@ module Kolo
     end
 
     def call
-      # TODO: implement app generation
+      raise AppExistsError, APP_EXISTS_ERROR_MESSAGE % File.join(File.dirname(__FILE__), @app_name) if app_exists?
+
+      create_app_structure
+      generate_files
+      generate_keep_files
     end
 
     private
     def create_app_structure
       @config[:dirs].each do |d|
-        FileUtils.mkdir_p("#{@app_name}/#{d}")
+        FileUtils.mkdir_p(File.join(@app_name, d))
       end
     end
 
@@ -34,8 +39,12 @@ module Kolo
       end
     end
 
-    # TODO
-    # def generate_keep_files
+    def generate_keep_files
+      @config[:dirs].each do |d|
+        dir = File.join(@app_name, d)
+        FileUtils.touch(File.join(dir, ".keep")) if Dir.empty?(dir)
+      end
+    end
 
     def initialize_git
       FileUtils.cd(@app_name) do
@@ -43,16 +52,17 @@ module Kolo
       end
     end
 
-    def keep_file(relative_dest)
-      FileUtils.touch("#{@app_name}/#{relative_dest}/.keep") if Dir.empty?(relative_dest)
-    end
-
+    # TODO: fix errors
     def template(relative_src:, relative_dest:, params: {})
-      Template.new(params).render("#{@template_dir}/#{relative_src}", "#{@app_name}/#{relative_dest}")
+      Template.new(params).render(File.join(@template_dir, relative_src), File.join(@app_name, relative_dest))
     end
 
     def copy_file(relative_src, relative_dest)
-      FileUtils.cp("#{@template_dir}/#{relative_src}", "#{@app_name}/#{relative_dest}")
+      FileUtils.cp(File.join(@template_dir, relative_src), File.join(@app_name, relative_dest))
+    end
+
+    def app_exists?
+      File.exist?(@app_name)
     end
 
     def validate_config(config_file)

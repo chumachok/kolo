@@ -2,6 +2,8 @@
 
 module Kolo
   class Template
+    def initialize(params={})
+    end
 
     def render(relative_src, relative_dest)
       content = File.open(relative_src, "rb", &:read)

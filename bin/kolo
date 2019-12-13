@@ -23,16 +23,20 @@ option_parser.parse!
 
 ARGV.size == 2 or ($stderr.puts option_parser.banner; exit(1))
 
+def handle_error(message)
+  $stderr.puts message
+  exit(1)
+end
+
 begin
   Kolo::CLI.new(command: ARGV[0], app_name: ARGV[1], options: options).call
 rescue Kolo::InvalidCommandError
-  $stderr.puts option_parser.banner
-  exit(1)
+  handle_error(option_parser.banner)
 rescue Kolo::InvalidInputError => e
-  $stderr.puts e.message
-  exit(1)
+  handle_error(e.message)
 rescue Kolo::InvalidConfigurationError => e
-  $stderr.puts e.message
-  exit(1)
+  handle_error(e.message)
+rescue Kolo::AppExistsError => e
+  handle_error(e.message)
 end
 

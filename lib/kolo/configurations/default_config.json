@@ -2,7 +2,7 @@
   "dirs": [
     "models",
     "views",
-    "lib",
+    "lib/tasks",
     "public",
     "assets/images",
     "assets/stylesheets",
@@ -54,11 +54,11 @@
   ],
   "files": [
     {
-      "src": "models.tt",
+      "src": "models.rb.tt",
       "dest": "models.rb"
     },
     {
-      "src": "puma.tt",
+      "src": "puma.rb.tt",
       "dest": "puma.rb"
     },
     {
@@ -87,11 +87,11 @@
     },
     {
       "src": "lib/tasks/irb.rake.tt",
-      "dest": "ib/tasks/irb.rake"
+      "dest": "lib/tasks/irb.rake"
     },
     {
-      "src": "lib/tasks/migrate.rake",
-      "dest": "lib/tasks/migrate.rake.tt"
+      "src": "lib/tasks/migrate.rake.tt",
+      "dest": "lib/tasks/migrate.rake"
     },
     {
       "src": "config.ru.tt",

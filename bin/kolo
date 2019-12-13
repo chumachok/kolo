@@ -1,0 +1,38 @@
+#!/usr/bin/env ruby
+require_relative "../lib/kolo"
+require "optparse"
+
+options = {
+  config_file: nil,
+  template_dir: nil
+}
+
+option_parser = OptionParser.new do |opts|
+  opts.banner = "usage: kolo new app_name [options]"
+
+  opts.on("--config_file path", "specify path to configuration file") do |path|
+    options[:config_file] = path
+  end
+
+  opts.on("--template_dir path", "specify path to template directory") do |path|
+    options[:template_dir] = path
+  end
+end
+
+option_parser.parse!
+
+ARGV.size == 2 or ($stderr.puts option_parser.banner; exit(1))
+
+begin
+  Kolo::CLI.new(command: ARGV[0], app_name: ARGV[1], options: options).call
+rescue Kolo::InvalidCommandError
+  $stderr.puts option_parser.banner
+  exit(1)
+rescue Kolo::InvalidInputError => e
+  $stderr.puts e.message
+  exit(1)
+rescue Kolo::InvalidConfigurationError => e
+  $stderr.puts e.message
+  exit(1)
+end
+

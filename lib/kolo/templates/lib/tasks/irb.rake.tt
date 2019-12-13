@@ -1,0 +1,11 @@
+desc "enter IRB shell"
+task :irb do
+  env = ENV["RACK_ENV"] || "development"
+  irb = proc do |env|
+    ENV["RACK_ENV"] = env
+    trap("INT", "IGNORE")
+    sh "#{FileUtils::RUBY.sub("ruby", "irb")} -r #{ROOT}/models"
+  end
+
+  irb.call(env)
+end

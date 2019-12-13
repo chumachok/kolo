@@ -1,0 +1,101 @@
+{
+  "dirs": [
+    "models",
+    "views",
+    "lib",
+    "public",
+    "assets/images",
+    "assets/stylesheets",
+    "assets/javascript"
+  ],
+  "template_files": [
+    {
+      "src": "app.rb.tt",
+      "dest": "dev_blog.rb",
+      "params": {
+        "app_name": "DevBlog"
+      }
+    },
+    {
+      "src": "Gemfile.tt",
+      "dest": "Gemfile",
+      "params":
+      {
+        "gems": [
+          {
+            "name": "roda"
+          },
+          {
+            "name": "sequel"
+          },
+          {
+            "name": "sequel_pg"
+          },
+          {
+            "name": "rack-unreloader"
+          },
+          {
+            "name": "puma"
+          },
+          {
+            "name": "ruby",
+            "version": "2.6.5"
+          }
+        ]
+      }
+    },
+    {
+      "src": "ruby-version.tt",
+      "dest": "ruby-version",
+      "params": {
+        "version": "2.6.5"
+      }
+    }
+  ],
+  "files": [
+    {
+      "src": "models.tt",
+      "dest": "models.rb"
+    },
+    {
+      "src": "puma.tt",
+      "dest": "puma.rb"
+    },
+    {
+      "src": "Rakefile.tt",
+      "dest": "Rakefile"
+    },
+    {
+      "src": "README.md.tt",
+      "dest": "README.md"
+    },
+    {
+      "src": "gitignore.tt",
+      "dest": ".gitignore"
+    },
+    {
+      "src": "README.md.tt",
+      "dest": "README.md"
+    },
+    {
+      "src": "env.rb.tt",
+      "dest": ".env.rb"
+    },
+    {
+      "src": "lib/tasks/seed.rake.tt",
+      "dest": "lib/tasks/seed.rake"
+    },
+    {
+      "src": "lib/tasks/irb.rake.tt",
+      "dest": "ib/tasks/irb.rake"
+    },
+    {
+      "src": "lib/tasks/migrate.rake",
+      "dest": "lib/tasks/migrate.rake.tt"
+    },
+    {
+      "src": "config.ru.tt",
+      "dest": "config.ru"
+    }
+  ]
+}

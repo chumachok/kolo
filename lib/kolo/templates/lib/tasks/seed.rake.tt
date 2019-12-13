@@ -1,0 +1,4 @@
+require_relative "#{ROOT}/models"
+
+task :seed do
+end

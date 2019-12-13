@@ -38,5 +38,7 @@ rescue Kolo::InvalidConfigurationError => e
   handle_error(e.message)
 rescue Kolo::AppExistsError => e
   handle_error(e.message)
+rescue Kolo::TemplateError => e
+  handle_error(e.message)
 end
 

@@ -5,6 +5,7 @@ module Kolo
     APP_EXISTS_ERROR_MESSAGE = "error when generating application: application already exists at '%s'"
     FILE_PARSE_ERROR_MESSAGE = "error when attempting to parse configuration file: file is missing or invalid"
     INVALID_CONFIGURATION_ERROR_MESSAGE = "configuration file is invalid: configuration for '%s' is missing or invalid"
+    TEMPLATE_ERROR_MESSAGE = "template error: %s"
 
     def initialize(app_name:, config_file:, template_dir:)
       @app_name = app_name
@@ -17,7 +18,9 @@ module Kolo
 
       create_app_structure
       generate_files
+      generate_template_files
       generate_keep_files
+      initialize_git
     end
 
     private
@@ -29,13 +32,17 @@ module Kolo
 
     def generate_template_files
       @config[:template_files].each do |f|
-        template(relative_src: f[:src], relative_dest: f[:dest], params: f[:params])
+        relative_src = File.join(@template_dir, f[:src])
+        relative_dest = File.join(@app_name, f[:dest])
+        template(relative_src, relative_dest, params: f[:params])
       end
     end
 
     def generate_files
       @config[:files].each do |f|
-        copy_file(f[:src], f[:dest])
+        relative_src = File.join(@template_dir, f[:src])
+        relative_dest = File.join(@app_name, f[:dest])
+        copy_file(relative_src, relative_dest)
       end
     end
 
@@ -52,13 +59,15 @@ module Kolo
       end
     end
 
-    # TODO: fix errors
-    def template(relative_src:, relative_dest:, params: {})
-      Template.new(params).render(File.join(@template_dir, relative_src), File.join(@app_name, relative_dest))
+    # TODO: template error handling
+    def template(relative_src, relative_dest, params: {})
+      validate_template_presence(relative_src)
+      Template.new(params).render(relative_src, relative_dest)
     end
 
     def copy_file(relative_src, relative_dest)
-      FileUtils.cp(File.join(@template_dir, relative_src), File.join(@app_name, relative_dest))
+      validate_template_presence(relative_src)
+      FileUtils.cp(relative_src, relative_dest)
     end
 
     def app_exists?
@@ -83,6 +92,9 @@ module Kolo
       config
     end
 
-    # TODO: hanle template missing error
+    def validate_template_presence(path)
+      raise TemplateError, TEMPLATE_ERROR_MESSAGE % "template is missing at #{path}" unless File.exist?(path)
+    end
+
   end
 end

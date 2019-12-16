@@ -1,12 +1,31 @@
 # frozen_string_literal: true
 
 module Kolo
+
+  ##
+  # AppGenerator class is responsible for generating files based on the provided configuration file and templates
   class AppGenerator
     APP_EXISTS_ERROR_MESSAGE = "error when generating application: application already exists at '%s'"
     FILE_PARSE_ERROR_MESSAGE = "error when attempting to parse configuration file: file is missing or invalid"
     INVALID_CONFIGURATION_ERROR_MESSAGE = "configuration file is invalid: configuration for '%s' is missing or invalid"
     TEMPLATE_ERROR_MESSAGE = "template error: %s"
 
+    ##
+    # Initializes AppGenerator class
+    #
+    # @param [String] app_name
+    # Name of the new application.
+    #
+    # @param [String] config_file
+    # Path to the configuration file.
+    # Configuration file must be follow the format defined in ./lib/kolo/configurations/default_configuration.json.
+    #
+    # @param [String] template_dir
+    # Directory that contains templates referenced from configuration file.
+    # A template should have .tt extension, and can use features of ERB templating system.
+    #
+    # @param [Tempate] template_class
+    # Class which is responsible for rendering ERB templates, must implement +initialize+ and +call+ methods.
     def initialize(app_name:, config_file:, template_dir:, template_class: Template)
       @app_name = app_name
       @config = validate_config(config_file)
@@ -14,6 +33,9 @@ module Kolo
       @template_class = template_class
     end
 
+    ##
+    # +call+ method contains the logic for generating the application.
+    # See ./spec/lib/kolo/app_generator_spec.rb for documentation of the expected behaviour.
     def call
       raise AppExistsError, APP_EXISTS_ERROR_MESSAGE % File.join(File.dirname(__FILE__), @app_name) if app_exists?
 

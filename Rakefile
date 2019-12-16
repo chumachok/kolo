@@ -15,6 +15,3 @@ task :publish do
   system "gem build kolo.gemspec --silent --output #{tag}"
   system "gem push #{tag}"
 end
-
-# load custom rake tasks
-Dir["#{File.dirname(__FILE__)}/tasks/**/*.rake"].sort.each { |t| load t }

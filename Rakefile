@@ -1,4 +1,12 @@
+require "bundler/gem_tasks"
 
+begin
+  require "rspec/core/rake_task"
+  RSpec::Core::RakeTask.new(:spec)
+rescue LoadError
+end
+
+task default: :spec
 
 desc "build the gem and publish it to RubyGems"
 task :publish do
@@ -7,3 +15,6 @@ task :publish do
   system "gem build kolo.gemspec --silent --output #{tag}"
   system "gem push #{tag}"
 end
+
+# load custom rake tasks
+Dir["#{File.dirname(__FILE__)}/tasks/**/*.rake"].sort.each { |ext| load ext }

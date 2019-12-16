@@ -1,5 +1,5 @@
 require_relative "models"
 require "roda"
 
-class <%= @app_name %> < Roda
+class <%= @class_name %> < Roda
 end

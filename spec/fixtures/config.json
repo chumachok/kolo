@@ -1,0 +1,18 @@
+{
+  "dirs": [
+    "test"
+  ],
+  "template_files": [
+    {
+      "src": "template.rb.tt",
+      "dest": "template.rb",
+      "params": {}
+    }
+  ],
+  "files": [
+    {
+      "src": "template.rb.tt",
+      "dest": "template.rb.tt"
+    }
+  ]
+}

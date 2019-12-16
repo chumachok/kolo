@@ -7,10 +7,10 @@ module Kolo
       params.each { |k, v| instance_variable_set("@#{k}", v) }
     end
 
-    def render(relative_src, relative_dest)
-      content = File.open(relative_src, "rb", &:read)
+    def call(src, dest)
+      content = File.open(src, "rb", &:read)
       template = ERB.new(content, nil, "-").result(binding)
-      File.open(relative_dest, "w") { |f| f.write(template) }
+      File.open(dest, "w") { |f| f.write(template) }
     end
 
   end

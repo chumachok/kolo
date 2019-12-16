@@ -1,4 +1,3 @@
-#!/usr/bin/env ruby
 # frozen_string_literal: true
 
 module Kolo
@@ -7,10 +6,11 @@ module Kolo
     DEFAULT_TEMPLATE_DIR = File.join(File.dirname(__FILE__), "templates")
     DEFAULT_CONFIG_FILE = File.join(File.dirname(__FILE__), "configurations", "default_config.json")
 
-    def initialize(command:, app_name:, options:)
+    def initialize(command:, app_name:, options:, app_generator_class: AppGenerator)
       @command = command
       @app_name = app_name
       @options = options
+      @app_generator_class = app_generator_class
 
       validate_input
     end
@@ -21,7 +21,7 @@ module Kolo
         @options[:config_file] ||= DEFAULT_CONFIG_FILE
         @options[:template_dir] ||= DEFAULT_TEMPLATE_DIR
 
-        AppGenerator.new(app_name: @app_name, config_file: @options[:config_file], template_dir: @options[:template_dir]).call
+        @app_generator_class.new(app_name: @app_name, config_file: @options[:config_file], template_dir: @options[:template_dir]).call
       else
         raise InvalidCommandError
       end

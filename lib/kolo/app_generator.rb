@@ -7,10 +7,11 @@ module Kolo
     INVALID_CONFIGURATION_ERROR_MESSAGE = "configuration file is invalid: configuration for '%s' is missing or invalid"
     TEMPLATE_ERROR_MESSAGE = "template error: %s"
 
-    def initialize(app_name:, config_file:, template_dir:)
+    def initialize(app_name:, config_file:, template_dir:, template_class: Template)
       @app_name = app_name
       @config = validate_config(config_file)
       @template_dir = template_dir
+      @template_class = template_class
     end
 
     def call
@@ -62,7 +63,7 @@ module Kolo
     # TODO: template error handling
     def template(relative_src, relative_dest, params: {})
       validate_template_presence(relative_src)
-      Template.new(params).render(relative_src, relative_dest)
+      @template_class.new(params).call(relative_src, relative_dest)
     end
 
     def copy_file(relative_src, relative_dest)
@@ -95,6 +96,6 @@ module Kolo
     def validate_template_presence(path)
       raise TemplateError, TEMPLATE_ERROR_MESSAGE % "template is missing at #{path}" unless File.exist?(path)
     end
-
   end
+
 end

@@ -14,11 +14,12 @@ Gem::Specification.new do |spec|
 
   spec.license       = "MIT"
 
-  spec.files         = "git ls-files".split($/)
-  spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
+  spec.files         = "git ls-files".split($/).reject { |f| f.match(%r{^(test|spec|features)/}) }
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
+  spec.executables   = ["kolo"]
   spec.require_paths = ["lib"]
 
-
-  # TODO: figure out dependencies
+  spec.add_development_dependency "rspec", "~> 3.9"
+  spec.add_development_dependency "bundler", "~> 2.1"
+  spec.add_development_dependency "rake", "~> 13.0"
 end

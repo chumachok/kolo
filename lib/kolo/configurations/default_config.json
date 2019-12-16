@@ -13,7 +13,7 @@
       "src": "app.rb.tt",
       "dest": "dev_blog.rb",
       "params": {
-        "app_name": "DevBlog"
+        "class_name": "DevBlog"
       }
     },
     {

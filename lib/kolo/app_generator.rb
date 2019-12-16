@@ -60,7 +60,6 @@ module Kolo
       end
     end
 
-    # TODO: template error handling
     def template(relative_src, relative_dest, params: {})
       validate_template_presence(relative_src)
       @template_class.new(params).call(relative_src, relative_dest)
@@ -96,6 +95,6 @@ module Kolo
     def validate_template_presence(path)
       raise TemplateError, TEMPLATE_ERROR_MESSAGE % "template is missing at #{path}" unless File.exist?(path)
     end
-  end
 
+  end
 end

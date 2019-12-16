@@ -66,7 +66,7 @@ RSpec.describe Kolo::CLI do
     context "when command is invalid" do
       let(:command) { "invalid" }
 
-      it "raises Kolo::InvalidCommandError" do
+      it "raises Kolo::InvalidCommandError error" do
         expect { subject_call }.to raise_error(Kolo::InvalidCommandError)
       end
     end # context "when command is invalid"
@@ -74,7 +74,7 @@ RSpec.describe Kolo::CLI do
     context "when app name is invalid" do
       let(:app_name) { "bl0g" }
 
-      it "raises Kolo::InvalidInputError with a descriptive message" do
+      it "raises Kolo::InvalidInputError error with a descriptive message" do
         expect { subject_call }.to raise_error(Kolo::InvalidInputError, "app name must contain lowercase letters or underscore character only")
       end
     end # context "when app name is invalid"

@@ -5,8 +5,7 @@
   "template_files": [
     {
       "src": "template.rb.tt",
-      "dest": "template.rb",
-      "params": {}
+      "dest": "template.rb"
     }
   ],
   "files": [

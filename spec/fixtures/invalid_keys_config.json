@@ -4,14 +4,14 @@
   ],
   "template_files": [
     {
-      "src": "template.rb.tt",
+      "src": "not_template.rb.tt",
       "dest": "template.rb",
       "params": {}
     }
   ],
   "files": [
     {
-      "src": "file.rb.tt",
+      "src": "not_file.rb.tt",
       "dest": "file.rb"
     }
   ]

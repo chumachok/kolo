@@ -1,0 +1,55 @@
+require "sequel"
+
+namespace :db do
+  desc "Perform migration up to latest migration available"
+  task migrate: :with_connection do
+    migrate(ENV["RACK_ENV"], nil)
+    puts "db:migrate executed"
+  end
+
+  desc "Rollback database all the way down"
+  task rollback: :with_connection do
+    migrate(ENV["RACK_ENV"], 0)
+    puts "db:rollback executed"
+  end
+
+  desc "Create the database"
+  task :create do
+    puts "Creating database '#{ENV["DB_NAME"]}'"
+    create_db
+    puts "db:create executed"
+  end
+
+  desc "Drop the database"
+  task drop: :with_connection do
+    Sequel::Model.db.disconnect
+    puts "Dropping database '#{ENV["DB_NAME"]}'"
+    drop_db
+    puts "db:drop executed"
+  end
+end
+
+def self.migrate(env, version)
+  ENV["RACK_ENV"] = env
+  require "logger"
+  Sequel.extension :migration
+  DB.loggers << Logger.new($stdout)
+  Sequel::Migrator.apply(DB, "#{ROOT}/migrate", version)
+end
+
+def self.create_db
+  args = []
+  args << "--encoding=utf8"
+  args << "--host=#{ENV["DB_HOST"]}" if ENV["DB_HOST"]
+  args << "--username=#{ENV["DB_USER"]}" if ENV["DB_USER"]
+  args << ENV["DB_NAME"]
+  system("createdb", *args)
+end
+
+def self.drop_db
+  args = []
+  args << "--host=#{ENV["DB_HOST"]}" if ENV["DB_HOST"]
+  args << "--username=#{ENV["DB_USER"]}" if ENV["DB_USER"]
+  args << ENV["DB_NAME"]
+  system("dropdb", *args)
+end

@@ -1,4 +1,2 @@
-require_relative "#{ROOT}/models"
-
-task :seed do
+task seed: :with_models do
 end

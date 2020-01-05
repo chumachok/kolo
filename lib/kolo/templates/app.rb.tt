@@ -2,4 +2,20 @@ require_relative "models"
 require "roda"
 
 class <%= @class_name %> < Roda
+  plugin :render
+
+  plugin :default_headers, "Content-Type" => "text/html", "X-Frame-Options" => "deny",
+    "X-Content-Type-Options" => "nosniff", "X-XSS-Protection" => "1; mode=block"
+
+  plugin :not_found do
+    view("404")
+  end
+
+  route do |r|
+
+    r. root do
+      view("index")
+    end
+
+  end
 end

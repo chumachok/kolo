@@ -2,5 +2,5 @@ max_threads_count = ENV.fetch("MAX_THREADS") { 5 }
 min_threads_count = ENV.fetch("MIN_THREADS") { max_threads_count }
 threads min_threads_count, max_threads_count
 
-port        ENV.fetch("PORT") { 3000 }
+port        ENV.fetch("PORT") { 9292 }
 environment ENV.fetch("RACK_ENV") { "development" }

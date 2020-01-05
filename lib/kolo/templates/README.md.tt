@@ -1,0 +1,11 @@
+# Running the generated roda application application:
+```
+bundle install
+rake db:create
+rackup
+```
+
+# Deleting the database:
+```
+rake db:drop
+```

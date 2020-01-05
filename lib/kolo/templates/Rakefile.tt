@@ -1,0 +1,13 @@
+require_relative ".env"
+
+ROOT = __dir__
+
+task :with_connection do
+  require_relative "db"
+end
+
+task :with_models do
+  require_relative "models"
+end
+
+Dir["#{ROOT}/lib/tasks/**/*.rake"].each { |p| load p }

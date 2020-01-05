@@ -1,0 +1,12 @@
+source "http://rubygems.org"
+git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
+
+<% @gems.each do |gem| -%>
+  <%- if gem[:version] -%>
+gem "<%= gem[:name] %>", "~> <%= gem[:version] %>"
+  <%- else -%>
+gem "<%= gem[:name] %>"
+  <%- end -%>
+<%- end -%>
+
+ruby "<%= @ruby_version %>"

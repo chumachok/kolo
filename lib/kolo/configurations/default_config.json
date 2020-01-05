@@ -4,16 +4,15 @@
     "views",
     "lib/tasks",
     "public",
-    "assets/images",
-    "assets/stylesheets",
-    "assets/javascript"
+    "assets/css",
+    "assets/js"
   ],
   "template_files": [
     {
       "src": "app.rb.tt",
-      "dest": "dev_blog.rb",
+      "dest": "app.rb",
       "params": {
-        "class_name": "DevBlog"
+        "class_name": "App"
       }
     },
     {
@@ -32,16 +31,19 @@
             "name": "sequel_pg"
           },
           {
+            "name": "tilt"
+          },
+          {
+            "name": "erubis"
+          },
+          {
             "name": "rack-unreloader"
           },
           {
             "name": "puma"
-          },
-          {
-            "name": "ruby",
-            "version": "2.6.5"
           }
-        ]
+        ],
+        "ruby_version": "2.6.5"
       }
     },
     {
@@ -49,6 +51,21 @@
       "dest": "ruby-version",
       "params": {
         "version": "2.6.5"
+      }
+    },
+    {
+      "src": "config.ru.tt",
+      "dest": "config.ru",
+      "params": {
+        "class_name": "App",
+        "filename": "app.rb"
+      }
+    },
+    {
+      "src": "env.rb.tt",
+      "dest": ".env.rb",
+      "params": {
+        "db_name": "app"
       }
     }
   ],
@@ -78,10 +95,6 @@
       "dest": "README.md"
     },
     {
-      "src": "env.rb.tt",
-      "dest": ".env.rb"
-    },
-    {
       "src": "lib/tasks/seed.rake.tt",
       "dest": "lib/tasks/seed.rake"
     },
@@ -90,12 +103,24 @@
       "dest": "lib/tasks/irb.rake"
     },
     {
-      "src": "lib/tasks/migrate.rake.tt",
-      "dest": "lib/tasks/migrate.rake"
+      "src": "lib/tasks/database.rake.tt",
+      "dest": "lib/tasks/database.rake"
     },
     {
-      "src": "config.ru.tt",
-      "dest": "config.ru"
+      "src": "db.rb.tt",
+      "dest": "db.rb"
+    },
+    {
+      "src": "views/index.erb.tt",
+      "dest": "views/index.erb"
+    },
+    {
+      "src": "views/404.erb.tt",
+      "dest": "views/404.erb"
+    },
+    {
+      "src": "views/layout.erb.tt",
+      "dest": "views/layout.erb"
     }
   ]
 }

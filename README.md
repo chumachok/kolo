@@ -3,7 +3,7 @@ Kolo is a simple app generator for building a bare-bones Roda/Sequel stack apps 
 
 ## Usage:
 ```
-gem install kolo
+gem install kolo-roda
 
 kolo new <app_name> --config_file <path> --template_dir <path>
 cd <app_name>

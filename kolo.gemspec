@@ -3,18 +3,18 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "kolo/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "kolo"
+  spec.name          = "kolo-roda"
   spec.version       = Kolo::VERSION
   spec.platform      = Gem::Platform::RUBY
   spec.authors       = ["Maksym Chumak"]
   spec.email         = ["chumachok11@gmail.com"]
-  spec.summary       = "Roda app generator"
-  spec.description   = "Command line utility for generating roda applications"
+  spec.summary       = "Roda/Sequel stack app generator"
+  spec.description   = "Command line utility for generating Roda/Sequel stack applications"
   spec.homepage      = "https://github.com/chumachok/kolo"
 
   spec.license       = "MIT"
 
-  spec.files         = "git ls-files".split($/).reject { |f| f.match(%r{^(test|spec|features)/}) }
+  spec.files         = `git ls-files`.split($/).reject { |f| f.match(%r{^(test|spec|features)/}) }
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.executables   = ["kolo"]
   spec.require_paths = ["lib"]

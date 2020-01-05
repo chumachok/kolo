@@ -1,4 +1,4 @@
-# Running the generated roda application application:
+# Running the generated roda application:
 ```
 bundle install
 rake db:create

@@ -1,5 +1,5 @@
 # Kolo
-Kolo is a simple app generator for building a bare-bones Roda/Sequel stack apps running on top of PosgreSQL database.
+Kolo is a simple app generator for building bare-bones Roda/Sequel stack apps running on top of PosgreSQL database.
 
 ## Usage:
 ```

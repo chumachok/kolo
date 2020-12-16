@@ -1,7 +1,7 @@
-# Kolo
-Kolo is a simple app generator for building bare-bones Roda/Sequel stack apps running on top of PosgreSQL database.
+# kolo
+kolo is a simple app generator for building bare-bones Roda/Sequel stack apps running on top of PosgreSQL database.
 
-## Usage:
+## usage:
 ```
 gem install kolo-roda
 
